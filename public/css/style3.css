@@ -1,0 +1,218 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;/*Устанавливает величину отступа от каждого края элемента. Отступом является пространство от границы текущего элемента до внутренней границы его родительского элемента*/
+  padding: 0; /*Устанавливает значение полей вокруг содержимого элемента.*/
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; /*определяет, как элемент должен быть показан*/
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+body, .login-submit, .login-submit:before, .login-submit:after {
+  background: #1e282c url("../img/bg.png") 0 0 repeat;
+    background: #1e282c;  
+
+}
+
+body {
+  font: 14px/24px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color:#1e282c; 
+}
+
+.login {
+  position: relative;
+    left: 0%;/*поставить позицию :посередине!*/
+  margin: 10px auto;/*30*//*вверх весь блок*/
+  width: 860px;/*600*/
+  padding-right: 0px;/*32*/
+  font-weight: 300;
+  color: #a8a7a8;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.8);
+}
+
+.zag p {
+  margin: 0 0 10px;
+}
+label {
+  /*float: left;*/
+  width: 330px;
+  line-height: 40px;
+  padding-right: 10px;
+  font-weight: 100;
+  text-align: right;
+  letter-spacing: 1px;
+ font-size: 13px;
+}
+
+.password {
+margin: 59px 0 10px;/*!!!!*/
+}
+
+.e-mail{
+margin: 170px 0 10px;
+}
+
+.login-submit {/*Выбрать файл*/
+  position: absolute;
+  top: 80px;
+  right: 27%;/*сдвиг кнопки в лево*/
+  width: 198px;
+  height: 48px; 
+}
+
+.but{/*Изменить пароль*/
+position: absolute;
+top: 301px;
+right: 28%;
+width: 198px;
+height: 48px;
+}
+
+.adr{/*Сохранить адрес*/
+position: absolute;
+top: 500px;
+right: 28%;
+width: 198px;
+height: 48px;
+}
+
+.butt{/*Сохранить телефон*/
+position: absolute;
+top: 700px;
+right: 29%;
+width: 198px;
+height: 48px;
+} 
+
+.login-button, .adr-button, .butto-button, .butt-button, .but-button {
+  position: relative;
+  display: inline-block;/*определяет, как элемент должен быть показан*/
+  font-size: 90%;
+  font-weight: 700;
+  color: rgb(209,209,217);
+  text-decoration: none;
+  text-shadow: 0 -1px 2px rgba(0,0,0,.2);/*Добавляет тень к тексту, цвет тени, смещение относительно надписи и радиус размытия*/
+  padding: .5em 1em; /*Устанавливает значение полей вокруг содержимого элемента.*/
+  outline: none;
+  border-radius: 3px;
+  background: #3c8dbc;
+  box-shadow:/*Добавляет тень к элементу*/
+   0 1px rgba(255,255,255,.2) inset,
+   0 3px 5px rgba(0,1,6,.5),
+   0 0 1px 1px rgba(0,1,6,.2);
+  transition: .2s ease-in-out;
+}
+.login-button:hover:not(:active) {
+  background: #3c8dbc;
+}
+.login-button:active {
+  top: 1px;
+  background:#3c8dbc;
+  box-shadow:/*Добавляет тень к элементу*/
+   0 0 1px rgba(0,0,0,.5) inset,
+   0 2px 3px rgba(0,0,0,.5) inset,
+   0 1px 1px rgba(255,255,255,.1);
+}
+
+
+.number {
+margin: 145px 0 10px;/*!!!!*/
+    right: 68%;
+}
+
+.ps{ 
+    position: relative;
+  min-height: 1px;
+  padding-right: 1px;
+  padding-left: 15px;
+    float: right;
+     width: 69%;
+}
+
+.ps1{
+     position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+    float: right;
+     width: 55%;
+}
+
+.p1 {
+    position: relative;
+    width: 55%;
+    
+}
+.adress{
+    position: relative;
+  min-height: 1px;
+  padding-right: 1px;
+  padding-left: 15px;
+    float: right;
+     width: 69%;
+}
+
+.adress1{
+    position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+    float: right;
+     width: 55%;
+}
+
+.numb{
+ position: relative;
+  min-height: 1px;
+  padding-right: 1px;
+  padding-left: 15px;
+    float: right;
+     width: 69%;
+}
+
+.number1{
+ position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+    float: right;
+     width: 55%;
+}

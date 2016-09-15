@@ -1,0 +1,41 @@
+    $beds = Beds::select('id', 'bed_numbers_facts', 'received', 'died', 'composed_at_beginning', 'department_id', 'written_out');
+    $departments = departments::select('department_name');
+    $bedsTableView = TableView::collection( $beds, 'Beds' )
+        ->column('Тип дневного стационара', ['department_id:sort' => function ($beds) 
+        {
+            return $beds = DB::table('departments')->where('id', '=', $beds->department_id)->pluck('department_name');
+        }])
+        ->column('Количество коек (план)',  ['beds_numbers:sort' => function ($beds) 
+        {
+            return $beds = DB::table('plans')->where('id', '=', $beds->department_id)->pluck('beds_numbers');
+        }])
+        ->column('Количество коек (факт)', 'bed_numbers_facts:sort,search')
+        ->column('Состаяние на начало дня', 'composed_at_beginning:sort,search')
+        ->column('Поступило', 'received:sort,search')
+        ->column('Из них планово',   ['plan:sort' => function ($beds) 
+        {
+            return $beds = DB::table('queue')->where('id', '=', $beds->department_id)->pluck('plan');
+        }])
+        ->column('До 7 дней',   ['wait_up_to_7_days:sort' => function ($beds) 
+        {
+            return $beds = DB::table('queue')->where('id', '=', $beds->department_id)->pluck('wait_up_to_7_days');
+        }])
+        ->column('До 8-14 дней',   ['wait_8_14_days:sort' => function ($beds) 
+        {
+            return $beds = DB::table('queue')->where('id', '=', $beds->department_id)->pluck('wait_8_14_days');
+        }])
+        ->column('До 15-30 дней',   ['wait_15_30_days:sort' => function ($beds) 
+        {
+            return $beds = DB::table('queue')->where('id', '=', $beds->department_id)->pluck('wait_15_30_days');
+        }])
+        ->column('Более 30 дней',   ['wait_more_than_30_days:sort' => function ($beds) 
+        {
+            return $beds = DB::table('queue')->where('id', '=', $beds->department_id)->pluck('wait_more_than_30_days');
+        }])
+        ->column('Выписано', 'written_out:sort,search')
+        ->column('Умерло', 'died:sort,search')
+->build();
+        
+    return view('outpatient_doctor', [
+        'bedsTableView' => $bedsTableView
+    ]);
