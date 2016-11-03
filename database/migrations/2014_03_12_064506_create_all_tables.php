@@ -58,6 +58,25 @@ class CreateAllTables extends Migration {
 		$table->increments('id');
 		$table->integer('year_visits');
 		});
+	
+		Schema::create('state_schedule', function(Blueprint $table)
+		{
+		$table->increments('id');
+		$table->float('stake_numbers');
+		$table->integer('hospital_id')->unsigned()->nullable();
+		$table->foreign('hospital_id')->references('id')->on('hospital')->onDelete('cascade');
+		});
+		
+	    Schema::create('employee_category', function(Blueprint $table)
+		{
+		$table->increments('id');
+		$table->string('category_name');
+		$table->integer('hospital_id')->unsigned()->nullable();
+		$table->foreign('hospital_id')->references('id')->on('hospital')->onDelete('cascade');
+		$table->integer('state_schedule_id')->unsigned()->nullable();
+		$table->foreign('state_schedule_id')->references('id')->on('state_schedule')->onDelete('cascade');
+		});	
+		
 		Schema::create('employee', function(Blueprint $table)
 		{
 		$table->increments('id');
@@ -72,7 +91,11 @@ class CreateAllTables extends Migration {
 		$table->foreign('unit_id')->references('id')->on('unit')->onDelete('cascade');
 		$table->integer('load_plan_id')->unsigned()->nullable();
 		$table->foreign('load_plan_id')->references('id')->on('load_plan')->onDelete('cascade');
+		$table->integer('employee_category_id')->unsigned()->nullable();
+		$table->foreign('employee_category_id')->references('id')->on('employee_category')->onDelete('cascade');
 		});
+		
+		
 		Schema::create('employee_moonlighting', function(Blueprint $table)
 		{
 		$table->increments('id');
@@ -82,6 +105,7 @@ class CreateAllTables extends Migration {
 		$table->integer('employee_id')->unsigned()->nullable();
 		$table->foreign('employee_id')->references('id')->on('employee')->onDelete('cascade');
 		});
+		
 		Schema::create('funding_type', function(Blueprint $table)
 		{
 		$table->increments('id');
@@ -89,23 +113,19 @@ class CreateAllTables extends Migration {
 		$table->boolean('budget');
 		$table->boolean('paid');
 		});
+		
+
+		
 		Schema::create('position', function(Blueprint $table)
 		{
 		$table->increments('id');
 		$table->string('position_name');
 		$table->integer('funding_type_id')->unsigned()->nullable();
 		$table->foreign('funding_type_id')->references('id')->on('funding_type')->onDelete('cascade');
+		$table->integer('state_schedule_id')->unsigned()->nullable();
+		$table->foreign('state_schedule_id')->references('id')->on('state_schedule')->onDelete('cascade');
 		});
 		
-		Schema::create('state_schedule', function(Blueprint $table)
-		{
-		$table->increments('id');
-		$table->float('stake_numbers');
-		$table->integer('employee_id')->unsigned()->nullable();
-		$table->foreign('employee_id')->references('id')->on('employee')->onDelete('cascade');
-		$table->integer('hospital_id')->unsigned()->nullable();
-		$table->foreign('hospital_id')->references('id')->on('hospital')->onDelete('cascade');
-		});
 		
 		Schema::create('employee_position', function(Blueprint $table)
 		{
@@ -115,15 +135,7 @@ class CreateAllTables extends Migration {
 		$table->integer('position_id')->unsigned()->nullable();
 		$table->foreign('position_id')->references('id')->on('position')->onDelete('cascade');
 		});		
-	    Schema::create('employee_category', function(Blueprint $table)
-		{
-		$table->increments('id');
-		$table->string('category_name');
-		$table->integer('employee_id')->unsigned()->nullable();
-		$table->foreign('employee_id')->references('id')->on('employee')->onDelete('cascade');
-		$table->integer('hospital_id')->unsigned()->nullable();
-		$table->foreign('hospital_id')->references('id')->on('hospital')->onDelete('cascade');
-		});	
+
 		
 	    Schema::create('visit_numbers', function(Blueprint $table)
 		{

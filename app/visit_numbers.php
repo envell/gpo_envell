@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Visit_numbers extends Model {
+class visit_numbers extends Model {
  protected $table = 'visit_numbers';
     protected $primaryKey = 'id';
   	protected $fillable = ['id', 'category_name', 'hospital_disease', 
@@ -13,7 +13,7 @@ class Visit_numbers extends Model {
     
     public function employee()
     {
-        return $this->hasOne('App\employee', 'id', 'employee_id');
+        return $this->belongsTo('App\employee', 'id', 'employee_id');
     }
     public function hospital()
     {

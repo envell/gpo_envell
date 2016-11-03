@@ -2,13 +2,18 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Employee extends Model {
+class employee extends Model {
  protected $table = 'employee';
     protected $primaryKey = 'id';
   	protected $fillable = ['id', 'name', 'surname', 'patronymic', 'decree', 'hospital_id', 'unit_id', 'load_plan_id'];
+  	protected $appends = ['full_name'];
   	public $timestamps = false;
 	//
     
+    public function getFullNameAttribute()
+    {
+    $full_name = $this->surname.' '.$this->name.' '.$this->patronymic;
+    }
     public function state_schedule()
     {
         return $this->hasMany('App\state_schedule', 'id', 'employee_id');
@@ -23,7 +28,7 @@ class Employee extends Model {
     }
      public function visit_numbers()
     {
-        return $this->hasMany('App\visit_numbers', 'id', 'employee_id');
+        return $this->hasMany('App\visit_numbers', 'employee_id', 'id');
     }
      public function employee_category()
     {

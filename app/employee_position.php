@@ -3,7 +3,7 @@
 use Illuminate\Database\Eloquent\Model;
 
 class Employee_position extends Model {
- protected $table = 'empoyee_position';
+ protected $table = 'employee_position';
     protected $primaryKey = 'id';
   	protected $fillable = ['id', 'employee_id', 'position_id'];
   	public $timestamps = false;

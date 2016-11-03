@@ -2,16 +2,16 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class State_schedule extends Model {
+class state_schedule extends Model {
  protected $table = 'state_schedule';
     protected $primaryKey = 'id';
-  	protected $fillable = ['id', 'stake_numbers', 'employee_id', 'hospital_id'];
+  	protected $fillable = ['id', 'stake_numbers', 'hospital_id'];
   	public $timestamps = false;
 	//
     
-    public function employee()
+    public function position()
     {
-        return $this->hasOne('App\employee', 'id', 'employee_id');
+        return $this->belongsTo('App\position', 'id', 'state_schedule_id');
     }
     public function hospital()
     {

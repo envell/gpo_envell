@@ -6,45 +6,17 @@
  <table class="table table-bordered table-striped" width="100%" id="postsTable">
                         <thead>
             <tr>
-                <th rowspan="2">Профиль койки</th>
-                <th colspan="8">Факт</th>
-                <th colspan="5">Очередь</th>
-                <th colspan="3">Норматив</th>
-                <th colspan="2">% выполнения норматива</th>
-                <th colspan="4">План</th>
-                <th colspan="4">Выполнение плана</th>
+                <th rowspan="1">Должность</th>
+                <th rowspan="1">Ставок по штату</th>
+                <th rowspan="1">Ставок занято</th>
+                <th rowspan="1">Физических лиц по основному месту работы</th>
+                <th rowspan="1">Физических лиц по внутреннему/внешнему совместительству</th>
+                <th rowspan="1">Физических лиц в декретеу</th>
+                <th rowspan="1">Укомплектованность штатов занятыми должностями</th>
+                <th rowspan="1">Укомплектованность штатов фзическими лицами</th>
+                <th rowspan="1">Коэффициент совместительства</th>
             </tr>
-                <tr>
-
-                    <th>Пролечено пациентов</th>
-                    <th>Проведено койко-дней</th>
-                    <th>Ср. занятость койки</th>
-                    <th>Прогноз на конец года</th>
-                    <th>Ср. срок лечения</th>
-                    <th>Оборот койки.</th>
-                    <th>Больн. лет</th>
-                    <th>Планово</th>
-                    <th>Среднегодовая койка</th>
-                    <th>Ожидание до 7 дней</th>
-                    <th>Ожидание 8-14 дней</th>
-                    <th>Ожидание 15-30 дней</th>
-                    <th>Ожидание более 30 дней</th>
-                    <th>Занятость койки</th>
-                    <th>Ср. длит.</th>
-                    <th>Оч. госпит.</th>
-                    <th>Занятость койки</th>
-                    <th>Ср. длит.</th>
-                    <th>Пролечено пациентов</th>
-                    <th>Проведено койко-дней</th>
-                    <th>Ср. длит.</th>
-                    <th>Занятость койки</th>
-                    <th>Пролечено пациентов</th>
-                    <th>Проведено койко-дней</th>
-                    <th>Ср. длит.</th>
-                    <th>Занятость койки</th>
-              
-                                   
-                </tr>
+                
                 </thead>
             </table>
             
@@ -118,7 +90,7 @@ $(function() {
             ],
            
               ajax: {
-                 url: '{!! route( 'hospital_doctor' ) !!}',
+                  url: '{!! route( 'doctor_staff' ) !!}',
                   data: function ( d ) {
                 d.start_date = $("input[name='range_start']").val(),
                 d.end_date =   $("input[name='range_end']").val();
@@ -126,17 +98,15 @@ $(function() {
               },
             columns: [
           
-                {data: 'bed_name', name: 'bed_name' },
-                {data: 'cured', name: 'cured' },
-                {data: 'beddays_spent', name: 'beddays_spent'},
-                {data: 'avg_bed_occupancy', name: 'avg_bed_occupancy'},
-                {data: 'avg_year_prediction', name: 'avg_year_prediction'},
-                {data: 'avg_treat_dur', name: 'avg_treat_dur'},
-                {data: 'bed_rotation', name: 'bed_rotation'},
-                {data: 'bed_occupancy_norm', name: 'bed_occupancy_norm'},
-                {data: 'treatment_dur_norm', name: 'treatment_dur_norm'},
-                {data: 'bed_occupancy_norm_percent', name: 'bed_occupancy_norm_percent'},
-                {data: 'treatment_dur_norm_percent', name: 'treatment_dur_norm_percent'},
+                {data: 'position_name', name: 'position_name' },
+                {data: 'stake_numbers', name: 'stake_numbers'},
+                {data: 'stake_employed', name: 'stake_employed'},
+                {data: 'persons_at_the_main_place', name: 'persons_at_the_main_place'},
+                {data: 'persons_at_the_internal_external_moonlighting', name: 'persons_at_the_internal_external_moonlighting'},
+                {data: 'persons_at_decreet', name: 'persons_at_decreet'},
+                {data: 'staffing_occupied_posts', name: 'staffing_occupied_posts'},
+                {data: 'staffing_individuals', name: 'staffing_individuals'},
+                {data: 'coefficient_of_combining', name: 'coefficient_of_combining'},
           
             ],
    

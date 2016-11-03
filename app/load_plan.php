@@ -11,6 +11,6 @@ class Load_plan extends Model {
     
         public function employee()
     {
-        return $this->hasMany('App\employee', 'id', 'load_plan_id');
+        return $this->belongsTo('App\employee', 'id', 'load_plan_id');
     }
 }

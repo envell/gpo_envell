@@ -1,8 +1,11 @@
 <?php
 
 namespace App\DataTables;
-use App\BedProfile;
+use App\position;
 use App\departments;
+use App\employee_position;
+use App\employee_moonlighting;
+use App\employee;
 use DB;
 use Carbon\Carbon;
 use Yajra\Datatables\Services\DataTable;
@@ -25,41 +28,46 @@ public function ajax()
     $start = Carbon::parse($start_date);
     $end = Carbon::parse($end_date);
     $days = $start->diffInDays($end);
+    
 //$days = 2;
-$bed_profiles = BedProfile::get();
-foreach ($bed_profiles as $bed_profile)
+$positions = position::get();
+foreach ($positions as $position)
 {
-$bed_name = $bed_profile->bed_name;
-$bed_numbers = $bed_profile->DayStationar()->whereBetween('date_day_stationar', [$start_date, $end_date])->sum('bed_numbers');
-$bed_fact = $bed_profile->DayStationar()->whereBetween('date_day_stationar', [$start_date, $end_date])->sum('bed_numbers_fact_coefficient');
-$received = $bed_profile->DayStationar()->whereBetween('date_day_stationar', [$start_date, $end_date])->sum('received');
-$discharged = $bed_profile->DayStationar()->whereBetween('date_day_stationar', [$start_date, $end_date])->sum('discharged');
-$avg_bed_occupancy = $bed_numbers/$bed_fact/$days;
-$avg_year_prediction = ($avg_bed_occupancy/$days)*365;
-$avg_treat_dur = $bed_numbers/(($received+$discharged)/2);
-$bed_rotation = $discharged/$bed_fact/$days;
-$bed_occupancy_norm = $bed_profile->Norm->bed_occupation;
-$treat_dur_norm = $bed_profile->Norm->average_treatment_duration;
-$bed_occupancy_norm_percent = $avg_bed_occupancy/$bed_occupancy_norm*100;
-$treat_dur_norm_percent = $avg_treat_dur/$treat_dur_norm*100;
-$bed_occupancy_norm_percent = $bed_occupancy_norm_percent.'%';
-$treat_dur_norm_percent = $treat_dur_norm_percent.'%';
-$collection->push(['bed_name' => $bed_name,
-                   'avg_bed_occupancy' => $avg_bed_occupancy,
-                   'avg_year_prediction' => $avg_year_prediction,
-                   'avg_treat_dur' => $avg_treat_dur,
-                   'bed_rotation' => $bed_rotation,
-                   'bed_occupancy_norm' => $bed_occupancy_norm,
-                   'treatment_dur_norm' => $treat_dur_norm,
-                   'bed_occupancy_norm_percent' => $bed_occupancy_norm_percent,
-                   'treatment_dur_norm_percent' => $treat_dur_norm_percent,
-                 ]);
 
+$position_name=NULL;
+
+$employee_moonlightings = employee_moonlighting::get();
+$position_name = $position->position_name;
+
+$persons_at_the_main_place = employee_moonlighting::where('moonlighting_id', '=', '1')->count();
+ 
+$stake_numbers = $position->state_schedule->stake_numbers;
+
+$stake_employed = employee_position::where('position_id', '=', $position->id)->count();
+$staffing_occupied_posts = $stake_numbers/$stake_employed;
+$staffing_individuals = $persons_at_the_main_place/$stake_numbers;
+$coefficient_of_combining = $stake_employed/$persons_at_the_main_place;
+$persons_at_the_internal_external_moonlighting = employee_moonlighting::where('moonlighting_id', '=', '2')->count();
+$persons_at_decreet = employee::where('decree', '=', '1')->count();
+$staffing_occupied_posts = $stake_numbers/$stake_employed;
+$staffing_individuals = $persons_at_the_main_place/$stake_employed;
+$coefficient_of_combining = $stake_employed/$persons_at_the_main_place;
+    
+$collection->push(['position_name' => $position_name,
+                   'stake_numbers' => $stake_numbers,
+                   'stake_employed' => $stake_employed,
+                   'persons_at_the_main_place' => $persons_at_the_main_place,
+                   'persons_at_the_internal_external_moonlighting' => $persons_at_the_internal_external_moonlighting,
+                   'persons_at_decreet' => $persons_at_decreet,
+                   'staffing_occupied_posts' => $staffing_occupied_posts,
+                   'staffing_individuals' => $staffing_individuals,
+                   'coefficient_of_combining' => $coefficient_of_combining,
+                 ]);
+      
 }
     return $this->datatables
         ->of($collection)
         ->make(true);
-      
 }
 
     /**

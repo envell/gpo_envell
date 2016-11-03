@@ -31,7 +31,7 @@ foreach ($bed_profiles as $bed_profile)
 {
 $bed_name = $bed_profile->bed_name;
 $received = $bed_profile->Stationar()->whereBetween('date_stationar', [$start_date, $end_date])->sum('received_stationar');
-$died = $bed_profile->Stationar()->whereBetween('date_stationar', [$start_date, $end_date])->sum('died')-sum();
+$died = $bed_profile->Stationar()->whereBetween('date_stationar', [$start_date, $end_date])->sum('died');
 $cured = $received + $died;
 $day_begining = $bed_profile->Stationar()->whereBetween('date_stationar', [$start_date, $end_date])->sum('day_begining');
 $discharged_stationar = $bed_profile->Stationar()->whereBetween('date_stationar', [$start_date, $end_date])->sum('discharged_stationar')-sum();
