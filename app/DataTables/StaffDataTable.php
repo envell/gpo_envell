@@ -4,6 +4,7 @@ namespace App\DataTables;
 use App\position;
 use App\departments;
 use App\employee_position;
+use App\employee_status;
 use App\employee_moonlighting;
 use App\employee;
 use DB;
@@ -32,15 +33,16 @@ public function ajax()
 //$days = 2;
 $positions = position::get();
 foreach ($positions as $position)
-{
-
-$position_name=NULL;
-
-$employee_moonlightings = employee_moonlighting::get();
+{ 
 $position_name = $position->position_name;
+$employee_moonlightings = employee_moonlighting::get();
+$query = employee_moonlighting::with('employee_status')->where('moonlighting_id', '=', '1');
+$query->whereHas('employee_status', function($query) use ($start_date)
+{
+        $query->where('date_employee_status', '=', $start_date);
+}); 
+$persons_at_the_main_place = $query->count();
 
-$persons_at_the_main_place = employee_moonlighting::where('moonlighting_id', '=', '1')->count();
- 
 $stake_numbers = $position->state_schedule->stake_numbers;
 
 $stake_employed = employee_position::where('position_id', '=', $position->id)->count();
@@ -48,7 +50,7 @@ $staffing_occupied_posts = $stake_numbers/$stake_employed;
 $staffing_individuals = $persons_at_the_main_place/$stake_numbers;
 $coefficient_of_combining = $stake_employed/$persons_at_the_main_place;
 $persons_at_the_internal_external_moonlighting = employee_moonlighting::where('moonlighting_id', '=', '2')->count();
-$persons_at_decreet = employee::where('decree', '=', '1')->count();
+$persons_at_decreet = employee_status::where('decree', '=', '1')->count();
 $staffing_occupied_posts = $stake_numbers/$stake_employed;
 $staffing_individuals = $persons_at_the_main_place/$stake_employed;
 $coefficient_of_combining = $stake_employed/$persons_at_the_main_place;

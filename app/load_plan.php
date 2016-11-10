@@ -9,8 +9,8 @@ class Load_plan extends Model {
   	public $timestamps = false;
 	//
     
-        public function employee()
+        public function employee_status()
     {
-        return $this->belongsTo('App\employee', 'id', 'load_plan_id');
+        return $this->belongsTo('App\employee_status', 'id', 'load_plan_id');
     }
 }

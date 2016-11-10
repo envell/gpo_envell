@@ -1,6 +1,7 @@
 <?php
 namespace App\DataTables;
 use App\employee;
+use App\employee_status;
 use App\departments;
 use App\employee_position;
 use App\position;
@@ -30,25 +31,27 @@ public function ajax()
 $employees = employee::get();
 foreach ($employees as $employee)
 {
+$position_name=NULL;
 $employee_name = $employee->surname.' '.$employee->name.' '.$employee->patronymic;
 
-$position_name=NULL;
-$employee_positions = employee_position::where('employee_id', '=', $employee->id)->get();
+$employee_positions = employee_position::where('employee_status_id', '=', $employee->id)->get();
 foreach($employee_positions as $employee_position)
 {
 $position_name = $position_name.' '.$employee_position->position->position_name;
 }
 
-$stake_numbers_fact = $employee->stake_numbers_fact;
-$hospital_disease = $employee->visit_numbers()->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('hospital_disease');
-$hospital_profilactic = $employee->visit_numbers()->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('hospital_profilactic');
-$home_disease = $employee->visit_numbers()->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('home_disease');
-$home_profilactic = $employee->visit_numbers()->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('home_profilactic');
+
+
+$stake_numbers_fact = $employee->employee_status->stake_numbers_fact;
+$hospital_disease = $employee->employee_status->visit_numbers()->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('hospital_disease');
+$hospital_profilactic = $employee->employee_status->visit_numbers()->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('hospital_profilactic');
+$home_disease = $employee->employee_status->visit_numbers()->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('home_disease');
+$home_profilactic = $employee->employee_status->visit_numbers()->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('home_profilactic');
 $all_in_hospital = $hospital_profilactic+$hospital_disease;
 $all_in_home = $home_profilactic+$home_disease;
-$payment_omc = $employee->visit_numbers()->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('payment_omc');
-$payment_budget = $employee->visit_numbers()->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('payment_budget');
-$payment_paid = $employee->visit_numbers()->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('payment_paid');
+$payment_omc = $employee->employee_status->visit_numbers()->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('payment_omc');
+$payment_budget = $employee->employee_status->visit_numbers()->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('payment_budget');
+$payment_paid = $employee->employee_status->visit_numbers()->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('payment_paid');
 $total_visits = $all_in_home+$all_in_hospital;
 $percent_at_home = $all_in_home/$total_visits;
 $percent_disease = ($home_disease+$hospital_disease)/$total_visits;
@@ -57,7 +60,7 @@ $percent_omc = $payment_omc/$total_visits;
 $percent_budget = $payment_budget/$total_visits;
 $percent_paid = $payment_paid/$total_visits;
 $load_for_positions = $total_visits/$stake_numbers_fact;
-$year_visits = $employee->load_plan->year_visits;
+$year_visits = $employee->employee_status->load_plan->year_visits;
 $performing_load = ($load_for_positions/$days*365)/$year_visits;
 $collection->push(['name' => $employee_name,
                    'position_name' => $position_name,

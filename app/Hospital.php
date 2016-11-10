@@ -68,9 +68,9 @@ class Hospital extends Model {
     {
         return $this->hasMany('App\state_schedule', 'id', 'hospital_id');
     }
-    public function employee()
+    public function employee_status()
     {
-        return $this->hasMany('App\employee', 'id', 'hospital_id');
+        return $this->hasMany('App\employee_status', 'id', 'hospital_id');
     }
     public function visit_numbers()
     {

@@ -22,11 +22,11 @@ $days = 2;
 $employees = employee::get();
 $positions = position::get();
 $position_name=NULL;
-foreach ($positions as $position)
+foreach ($employees as $employee)
 {
 
 
-echo $position->state_schedule->stake_numbers;
+echo $stake_numbers_fact = $employee->employee_status;
 }
     
 }

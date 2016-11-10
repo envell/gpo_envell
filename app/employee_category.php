@@ -11,7 +11,7 @@ class Employee_category extends Model {
     
     public function employee()
     {
-        return $this->hasOne('App\employee', 'id', 'employee_id');
+        return $this->hasOne('App\employee_status', 'id', 'employee_status_id');
     }
     public function hospital()
     {

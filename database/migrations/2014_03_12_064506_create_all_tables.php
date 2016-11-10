@@ -76,15 +76,21 @@ class CreateAllTables extends Migration {
 		$table->integer('state_schedule_id')->unsigned()->nullable();
 		$table->foreign('state_schedule_id')->references('id')->on('state_schedule')->onDelete('cascade');
 		});	
-		
+
 		Schema::create('employee', function(Blueprint $table)
 		{
 		$table->increments('id');
-		$table->float('stake_numbers_fact');
 		$table->string('surname');
 		$table->string('name');
 		$table->string('patronymic');
+		});
+		
+		Schema::create('employee_status', function(Blueprint $table)
+		{
+		$table->increments('id');
+		$table->date('date_employee_status');
 		$table->boolean('decree');
+		$table->float('stake_numbers_fact');
 		$table->integer('hospital_id')->unsigned()->nullable();
 		$table->foreign('hospital_id')->references('id')->on('hospital')->onDelete('cascade');
 		$table->integer('unit_id')->unsigned()->nullable();
@@ -93,8 +99,9 @@ class CreateAllTables extends Migration {
 		$table->foreign('load_plan_id')->references('id')->on('load_plan')->onDelete('cascade');
 		$table->integer('employee_category_id')->unsigned()->nullable();
 		$table->foreign('employee_category_id')->references('id')->on('employee_category')->onDelete('cascade');
+		$table->integer('employee_id')->unsigned()->nullable();
+		$table->foreign('employee_id')->references('id')->on('employee')->onDelete('cascade');
 		});
-		
 		
 		Schema::create('employee_moonlighting', function(Blueprint $table)
 		{
@@ -102,8 +109,8 @@ class CreateAllTables extends Migration {
 		$table->integer('year_visits');
 		$table->integer('moonlighting_id')->unsigned()->nullable();
 		$table->foreign('moonlighting_id')->references('id')->on('moonlighting')->onDelete('cascade');
-		$table->integer('employee_id')->unsigned()->nullable();
-		$table->foreign('employee_id')->references('id')->on('employee')->onDelete('cascade');
+		$table->integer('employee_status_id')->unsigned()->nullable();
+		$table->foreign('employee_status_id')->references('id')->on('employee_status')->onDelete('cascade');
 		});
 		
 		Schema::create('funding_type', function(Blueprint $table)
@@ -130,8 +137,8 @@ class CreateAllTables extends Migration {
 		Schema::create('employee_position', function(Blueprint $table)
 		{
 		$table->increments('id');
-		$table->integer('employee_id')->unsigned()->nullable();
-		$table->foreign('employee_id')->references('id')->on('employee')->onDelete('cascade');
+		$table->integer('employee_status_id')->unsigned()->nullable();
+		$table->foreign('employee_status_id')->references('id')->on('employee_status')->onDelete('cascade');
 		$table->integer('position_id')->unsigned()->nullable();
 		$table->foreign('position_id')->references('id')->on('position')->onDelete('cascade');
 		});		
@@ -299,13 +306,15 @@ class CreateAllTables extends Migration {
 		Schema::dropIfExists('bed_plan');
 		Schema::dropIfExists('plan');
 		Schema::dropIfExists('visit_numbers');
-		Schema::dropIfExists('employee_category');
 		Schema::dropIfExists('employee_position');
-		Schema::dropIfExists('state_schedule');
+
 		Schema::dropIfExists('position');
 		Schema::dropIfExists('funding_type');
 		Schema::dropIfExists('employee_moonlighting');
-		Schema::dropIfExists('employee');
+		Schema::dropIfExists('employee_status');
+			Schema::dropIfExists('employee');
+		Schema::dropIfExists('employee_category');
+				Schema::dropIfExists('state_schedule');
 		Schema::dropIfExists('load_plan');
 		Schema::dropIfExists('unit');
 		Schema::dropIfExists('moonlighting');
