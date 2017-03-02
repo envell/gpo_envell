@@ -159,7 +159,7 @@
                 <li hidden="false" id = "radio1"><a href="#">
                   <div class="radio">  
                     <label>
-                      <input type="radio" name="optionsRadios" id="optionsRadios1" value="died">
+                      <input type="radio" name="optionsRadios" id="optionsRadios1" value="received">
                       Пролечено пациентов
                     </label>
                   </div>
@@ -168,7 +168,7 @@
                 <li hidden="false" id="radio2"><a href="#">
                   <div class="radio">
                     <label>
-                      <input type="radio" name="optionsRadios" id="optionsRadios2" value="held_beddays">
+                      <input type="radio" name="optionsRadios" id="optionsRadios2" value="bed_numbers" checked>
                       Койко-дни
                     </label>
                   </div>
@@ -177,7 +177,7 @@
                 <li id = "radio3"><a href="#">
                   <div class="radio">
                     <label>
-                      <input type="radio" name="optionsRadios" id="optionsRadios3" value="composed_at_beginning" checked='true'>
+                      <input type="radio" name="optionsRadios" id="optionsRadios3" value="composed_at_beginning">
                       Средняя занятость койки
                     </label>
                   </div>
@@ -266,7 +266,7 @@
         <div class="pull-right hidden-xs">
           <b>Version</b> 1.0
         </div>
-        <strong>Copyright &copy; 2014-2015 TUSUR GPO team</strong>
+        <strong>Copyright &copy; 2014-2016 TUSUR GPO team</strong>
       </footer>
     </div>
     <!-- jQuery 2.1.4 -->
@@ -316,6 +316,8 @@
 <script src="/vendor/datatables/buttons.server-side.js"></script>
 <script type="text/javascript" language="javascript" src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"> </script>
 <script type="text/javascript" language="javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+
+
 
 
 <script type="text/javascript">
@@ -651,6 +653,28 @@ window.changegraph = function(graph_name, type, department, start_date, end_date
 }
      </script>
      
+      <script>
+      $(function () {
+        "use strict";
+            // LINE CHART
+        var line = new Morris.Line({
+          element: 'line-chart',
+          resize: true,
+          data: [
+            {y: '2016-11-12', item1: 12},
+            {y: '2016-11-22', item1: 16},
+            {y: '2016-12-4', item1: 24},
+            {y: '2016-12-8', item1: 14}
+          ],
+          xkey: 'y',
+          ykeys: ['item1'],
+          labels: ['Item 1'],
+          lineColors: ['#3c8dbc'],
+          hideHover: 'auto'
+        });
+      });
+    </script>
+
      
     <script>
       var p = document.getElementById("inputi") ;
@@ -968,4 +992,8 @@ $("#12").click(function() {
     </script> -->
     
   </body>
+  
+  
+ 
+    
 </html>

@@ -5,6 +5,7 @@ use App\employee_status;
 use App\departments;
 use App\employee_position;
 use App\position;
+use App\visit_numbers;
 use DB;
 use Carbon\Carbon;
 use Yajra\Datatables\Services\DataTable;
@@ -28,30 +29,29 @@ public function ajax()
     $end = Carbon::parse($end_date);
     $days = $start->diffInDays($end);
 //$days = 2;
-$employees = employee::get();
-foreach ($employees as $employee)
+$employee_statuses = employee_status::whereBetween('date_employee_status', [$start_date, $end_date])->get();
+foreach ($employee_statuses as $employee_status)
 {
 $position_name=NULL;
-$employee_name = $employee->surname.' '.$employee->name.' '.$employee->patronymic;
-
-$employee_positions = employee_position::where('employee_status_id', '=', $employee->id)->get();
+$employee_name = $employee_status->employee->surname.' '.$employee_status->employee->name.' '.$employee_status->employee->patronymic;
+$employee_positions = employee_position::where('employee_status_id', '=', $employee_status->id)->get();
 foreach($employee_positions as $employee_position)
 {
 $position_name = $position_name.' '.$employee_position->position->position_name;
 }
 
 
-
-$stake_numbers_fact = $employee->employee_status->stake_numbers_fact;
-$hospital_disease = $employee->employee_status->visit_numbers()->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('hospital_disease');
-$hospital_profilactic = $employee->employee_status->visit_numbers()->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('hospital_profilactic');
-$home_disease = $employee->employee_status->visit_numbers()->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('home_disease');
-$home_profilactic = $employee->employee_status->visit_numbers()->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('home_profilactic');
+$visit_numbers = visit_numbers::where('employee_id', '=', $employee_status->employee->id);
+$stake_numbers_fact = $employee_status->stake_numbers_fact;
+$hospital_disease = $visit_numbers->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('hospital_disease');
+$hospital_profilactic = $visit_numbers->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('hospital_profilactic');
+$home_disease = $visit_numbers->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('home_disease');
+$home_profilactic = $visit_numbers->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('home_profilactic');
 $all_in_hospital = $hospital_profilactic+$hospital_disease;
 $all_in_home = $home_profilactic+$home_disease;
-$payment_omc = $employee->employee_status->visit_numbers()->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('payment_omc');
-$payment_budget = $employee->employee_status->visit_numbers()->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('payment_budget');
-$payment_paid = $employee->employee_status->visit_numbers()->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('payment_paid');
+$payment_omc = $visit_numbers->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('payment_omc');
+$payment_budget = $visit_numbers->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('payment_budget');
+$payment_paid = $visit_numbers->whereBetween('date_visit_numbers', [$start_date, $end_date])->sum('payment_paid');
 $total_visits = $all_in_home+$all_in_hospital;
 $percent_at_home = $all_in_home/$total_visits;
 $percent_disease = ($home_disease+$hospital_disease)/$total_visits;
@@ -60,7 +60,7 @@ $percent_omc = $payment_omc/$total_visits;
 $percent_budget = $payment_budget/$total_visits;
 $percent_paid = $payment_paid/$total_visits;
 $load_for_positions = $total_visits/$stake_numbers_fact;
-$year_visits = $employee->employee_status->load_plan->year_visits;
+$year_visits = $employee_status->load_plan->year_visits;
 $performing_load = ($load_for_positions/$days*365)/$year_visits;
 $collection->push(['name' => $employee_name,
                    'position_name' => $position_name,
@@ -84,7 +84,7 @@ $collection->push(['name' => $employee_name,
                    'load_for_positions' => $load_for_positions,
                    'attendance_for_the_year' => $year_visits,
                    'performing_load' => $performing_load,
-                   
+
                  ]);
 }
     return $this->datatables

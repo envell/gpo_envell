@@ -17,6 +17,6 @@ class employee extends Model {
 
     public function employee_status()
     {
-        return $this->hasMany('App\employee_status', 'id', 'employee_status_id');
+        return $this->belongsTo('App\employee_status', 'id', 'employee_status_id');
     }
 }

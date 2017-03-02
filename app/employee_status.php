@@ -5,13 +5,13 @@ use Illuminate\Database\Eloquent\Model;
 class employee_status extends Model {
  protected $table = 'employee_status';
     protected $primaryKey = 'id';
-  	protected $fillable = ['id', 'decree', 'stake_numbers_fact', 'hospital_id', 'unit_id', 'load_plan_id', 'employee_category_id'];
+  	protected $fillable = ['id', 'decree', 'stake_numbers_fact', 'hospital_id', 'unit_id', 'load_plan_id', 'employee_category_id',];
   	public $timestamps = false;
 
     
     public function employee()
     {
-        return $this->belongsTo('App\employee', 'id', 'employee_status_id');
+        return $this->hasOne('App\employee', 'id', 'employee_id');
     }
     public function state_schedule()
     {

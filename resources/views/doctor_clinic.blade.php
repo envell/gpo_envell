@@ -37,7 +37,7 @@
       
       <header class="main-header">
         <!-- Logo -->
-        <a href="#" class="logo">
+        <a class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><img src="dist/img/logo.png"/></span>
           <!-- logo for regular state and mobile devices -->
@@ -49,14 +49,14 @@
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
         <!-- Sidebar toggle button-->
-          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+          <a class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
           </a>
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">      
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown">
                   <img src="images/{{ Auth::user()->imag}}" class="user-image" alt="User Image"/>
                   <span class="hidden-xs">{{ Auth::user()->name }} {{ Auth::user()->middlename }}</span>
                 </a>
@@ -99,7 +99,7 @@
               </li>  
               
             <li class="treeview">
-              <a href="#">
+              <a>
                 <i class="fa fa-pie-chart"></i>
                 <span>График 1</span>
                 <i class="fa fa-angle-left pull-right"></i>
@@ -107,8 +107,8 @@
               <ul class="treeview-menu">
                
                      
-             <li><a href="#"> Диапазон дат X:</a></li>
-                <li><a href="#"> <div class="form-group">
+             <li><a> Диапазон дат X:</a></li>
+                <li><a> <div class="form-group">
                     <div class="input-group">
                       <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
@@ -119,11 +119,11 @@
                     </div><!-- /.input group -->
                   </div><!-- /.form group --></a></li>
               
-                <li><a href="#">Количество посещений Y:</a></li>
+                <li><a>Количество посещений Y:</a></li>
                 <!-- radio -->
                     <div class="form-group2">
                        <li>
-                             <a href="#">
+                             <a>
                         <div class="radio">  
                                  <label>
                           <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
@@ -132,7 +132,7 @@
                                   </a>
                           </li>
                          <li>
-                             <a href="#">
+                             <a>
                       <div class="radio">
                         <label>
                           <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
@@ -142,7 +142,7 @@
                                   </a>
                           </li>  
                          <li>
-                             <a href="#">
+                             <a>
                       <div class="radio">
                         <label>
                           <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
@@ -152,7 +152,7 @@
                                   </a>
                           </li> 
                          <li>
-                             <a href="#">
+                             <a>
                       <div class="radio">
                         <label>
                           <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
@@ -162,7 +162,7 @@
                                   </a>
                           </li> 
                          <li>
-                             <a href="#">
+                             <a>
                       <div class="radio">
                         <label>
                           <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
@@ -174,7 +174,7 @@
                     </div>
               </ul>
                <li class="treeview">
-                 <a href="#" class="main"><i class="fa fa-plus"></i> <span>Добавить график</span></a>
+                 <a class="main"><i class="fa fa-plus"></i> <span>Добавить график</span></a>
               </li> 
                  <li class="treeview">
                  <a href="doctor_staff" class="main"><i class="fa fa-edit "></i> <span class = "White">Кадры</span></a>

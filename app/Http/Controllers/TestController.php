@@ -2,6 +2,7 @@
 use App\employee;
 use App\employee_position;
 use App\employee_moonlighting;
+use App\employee_status;
 use App\position;
 use App\visit_numbers;
 use App\Http\Requests;
@@ -19,14 +20,14 @@ $collection = collect([]);
 $start_date = "2016-07-01";
 $end_date = "2116-07-01";
 $days = 2;
-$employees = employee::get();
+$employee_statuses = employee_status::get();
 $positions = position::get();
 $position_name=NULL;
-foreach ($employees as $employee)
+foreach ($employee_statuses as $employee_status)
 {
 
 
-echo $stake_numbers_fact = $employee->employee_status;
+echo $stake_numbers_fact = $employee_status->employee;
 }
     
 }

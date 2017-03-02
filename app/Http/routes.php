@@ -3,6 +3,7 @@ use App\Beds;
 use App\Hospital;
 use App\departments;
 use App\staff;
+use App\day_stationar;
 
 /*
 |--------------------------------------------------------------------------
@@ -161,11 +162,14 @@ $column = Input::get('days');
 $department = Input::get('department');
 $start_date = Input::get('start_date');
 $end_date = Input::get('end_date');
-
+$stats = day_stationar::select('date_day_stationar', $column.' as values')
+            ->where('date_day_stationar', '>=', $start_date)
+            ->where('date_day_stationar', '<=', $end_date)
+            ->get(); 
 
 
  
-    $stats = DB::table('beds')
+    /* $stats = DB::table('beds')
             ->join('departments', 'beds.department_id', '=', 'departments.id')
             ->join('queue', 'beds.department_id', '=', 'queue.id')
             ->leftJoin('plans', 'beds.department_id', '=', 'plans.id')
@@ -173,7 +177,7 @@ $end_date = Input::get('end_date');
             ->where('department_name', '=', $department)
             ->where('date', '>=', $start_date)
             ->where('date', '<=', $end_date)
-            ->get();
+            ->get(); */
 
   return $stats;
 });
